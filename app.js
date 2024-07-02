@@ -47,14 +47,14 @@ app.use(
 				return Event.find()
 					.then(events => {
 						return events.map(event => {
-							return { ...event._doc, _id: event.id }; // Throws an error ----> _id:event.doc._id.toString()
+                            return { ...event._doc, _id: event.id }; // _id: event.id <---- Not necessary||Throws an error ----> _id:event.doc._id.toString()
 						});
 					})
 					.catch(err => { 
 						throw err;
 					})
 			},
-			createEvent: (args) => {
+			createEvent: args => {
 				const event = new Event({
 					title: args.eventInput.title,
 					description: args.eventInput.description,
@@ -66,7 +66,7 @@ app.use(
 					.save()
 					.then(result => {
 						console.log(result);
-						return { ...result._doc }; //-------Could produce error------, _id: event.doc._id.toString()//
+                        return { ...result._doc }; // Throws an error ----> _id:event.doc._id.toString()
 					}).
 					catch(err => {
 						console.log(err);
